@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <LinearLayout tools:context="com.example.faisalpk40.sam.MainActivity" android:orientation="vertical" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:text="User Name"
+              android:id="@+id/textView4"/>
+
+    <EditText android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:id="@+id/TFusername"
+              android:inputType="textPersonName"
+              android:ems="10"/>
+
+    <TextView android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:text="Password"
+              android:id="@+id/textView6"/>
+
+    <EditText android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:id="@+id/TFpassword"
+              android:inputType="textPassword"
+              android:ems="10"/>
+
+    <Button   android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:text="Login"
+              android:id="@+id/Blogin"
+              android:onClick="onButtonClick"/>
+
+    <Button   android:layout_height="wrap_content"
+              android:layout_width="match_parent"
+              android:text="Sign Up Here"
+              android:id="@+id/Bsignup"
+              android:onClick="onButtonClick"/>
+
+</LinearLayout>
