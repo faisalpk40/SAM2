@@ -15,8 +15,9 @@ public class Message {
     boolean delivered; // tracks if message has left client buffer for delivery time out
     boolean read; // tracks if message has been read by recipient for time deletion
 
-    // needs two values to store time-stamps, one that records when message is queued for delivery (24 hours then deleted)
-    // and one that records when message is opened by recipient (1 minute then deleted)
+    // needs two values to store time-stamps:
+    // - one that records when message is queued for delivery (24 hours undelivered then deleted sender side)
+    // - one that records when message is opened by recipient (1 minute after opening then deleted recipient side)
 
     // needs a way to track the number and type of encryption on the message
 
@@ -49,6 +50,14 @@ public class Message {
 
     public String getMsgData(){
         return msgData;
+    }
+
+    public String getSendr(){
+        return sendr;
+    }
+
+    public String getRecvr() {
+        return recvr;
     }
 
     public void setMsgData(String data){
