@@ -1,5 +1,7 @@
 package com.example.faisalpk40.sam;
 
+import android.os.Bundle;
+
 /**
  * Created by kevin.omd on 5/1/2017.
  */
@@ -13,8 +15,8 @@ public class Message {
     boolean delivered; // tracks if message has left client buffer for delivery time out
     boolean read; // tracks if message has been read by recipient for time deletion
 
-    // needs two time values, one that records when message is queued for delivery and one
-    // that records when message is opened by recipient
+    // needs two values to store time-stamps, one that records when message is queued for delivery (24 hours then deleted)
+    // and one that records when message is opened by recipient (1 minute then deleted)
 
     // needs a way to track the number and type of encryption on the message
 
@@ -59,5 +61,18 @@ public class Message {
 
     public void setRecvr(String data){
         this.recvr = data;
+    }
+
+    //Packages data into bundle for sending between devices
+    public Bundle toBundle(){
+        Bundle b = new Bundle();
+
+        b.putString("send", sendr);
+        b.putString("recv", recvr);
+        b.putString("data", msgData);
+        b.putBoolean("deli", delivered);
+        b.putBoolean("read", read);
+
+        return b;
     }
 }
