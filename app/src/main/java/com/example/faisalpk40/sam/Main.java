@@ -26,7 +26,7 @@ public class Main extends Activity {
             startActivity (i);
         }
 
-        if(v.getId() == R.id.inboxButton){
+        else if(v.getId() == R.id.inboxButton){
             Intent i = new Intent(Main.this, MessageListener.class);
             startActivity (i);
         }

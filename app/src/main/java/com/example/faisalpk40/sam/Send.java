@@ -3,6 +3,7 @@ package com.example.faisalpk40.sam;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -24,10 +25,13 @@ public class Send extends Activity {
     DatabaseHelper helper = new DatabaseHelper(this);
 
     private Socket sock;
+    private EditText edt;
+    private String str;
+    Button bSend;
 
     //KM: these will change to the address of of the selected recipient
     private static final int SERVERPORT = 5000;
-    private static final String SERVERIP = "10.0.2.2";
+    private static final String SERVERIP = "172.21.1.169";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +39,19 @@ public class Send extends Activity {
         setContentView(R.layout.send);
 
         new Thread(new ClientThread()).start();
+        bSend = (Button) findViewById(R.id.sendButton);
+        EditText edt = (EditText) findViewById(R.id.clientText);
+        String str = edt.getText().toString();
     }
 
-    public void onClick(View view){
+    public void onButtonClick(View view){
         try{
-            EditText edt = (EditText) findViewById(R.id.clientText);
-            String str = edt.getText().toString();
+            //EditText edt = (EditText) findViewById(R.id.clientText);
+            //String str = edt.getText().toString();
             //Pretty sure the problem is somewhere here
-            PrintWriter msgOut = new PrintWriter( new BufferedWriter( new OutputStreamWriter(sock.getOutputStream())), true);
-            msgOut.println(str);
+            PrintWriter msgOut = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
+            msgOut.print(str + "\n");
+            Toast.makeText(Send.this, "Message Sent!", Toast.LENGTH_LONG).show();
             msgOut.flush();
         } catch (UnknownHostException e){
             e.printStackTrace();
@@ -58,8 +66,8 @@ public class Send extends Activity {
         @Override
         public void run(){
             try{
-                InetAddress servAddr = InetAddress.getByName(SERVERIP);
-                sock = new Socket(servAddr, SERVERPORT);
+                //InetAddress servAddr = InetAddress.getByName(SERVERIP);
+                sock = new Socket(SERVERIP, SERVERPORT);
                 if(sock.isConnected()){
                     Toast.makeText(Send.this, "Socket Created!", Toast.LENGTH_LONG).show();
                 }
