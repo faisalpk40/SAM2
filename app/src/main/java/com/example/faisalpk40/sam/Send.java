@@ -27,58 +27,58 @@ public class Send extends Activity {
     private Socket sock;
     private EditText edt;
     private String str;
-    Button bSend;
+    OutputStreamWriter oStream;
+    PrintWriter msgOut;
+    //Button bSend;
 
     //KM: these will change to the address of of the selected recipient
     private static final int SERVERPORT = 5000;
-    private static final String SERVERIP = "172.21.1.169";
+    private static final String SERVERIP = "127.0.0.1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send);
 
-        new Thread(new ClientThread()).start();
-        bSend = (Button) findViewById(R.id.sendButton);
-        EditText edt = (EditText) findViewById(R.id.clientText);
-        String str = edt.getText().toString();
+        try{
+            //InetAddress servAddr = InetAddress.getByName(SERVERIP);
+            sock = new Socket(SERVERIP, SERVERPORT);
+            Toast.makeText(Send.this, "Socket Created!", Toast.LENGTH_LONG).show();
+            oStream = new OutputStreamWriter(sock.getOutputStream());
+            msgOut = new PrintWriter(oStream);
+        } catch (UnknownHostException e1){
+            Toast.makeText(Send.this, "Socket Error!", Toast.LENGTH_LONG).show();
+            e1.printStackTrace();
+        } catch (IOException e1){
+            Toast.makeText(Send.this, "IO Error!", Toast.LENGTH_LONG).show();
+            e1.printStackTrace();
+        } catch (Exception e1){
+            Toast.makeText(Send.this, "Exceptional Error!", Toast.LENGTH_LONG).show();
+            e1.printStackTrace();
+        }
+        //new Thread(new ClientThread()).start();
+        //bSend = (Button) findViewById(R.id.sendButton);
     }
 
     public void onButtonClick(View view){
-        try{
-            //EditText edt = (EditText) findViewById(R.id.clientText);
-            //String str = edt.getText().toString();
+        try {
+            edt = (EditText) findViewById(R.id.clientText);
+            str = edt.getText().toString();
             //Pretty sure the problem is somewhere here
-            PrintWriter msgOut = new PrintWriter(new OutputStreamWriter(sock.getOutputStream()));
+
             msgOut.print(str + "\n");
             Toast.makeText(Send.this, "Message Sent!", Toast.LENGTH_LONG).show();
             msgOut.flush();
-        } catch (UnknownHostException e){
-            e.printStackTrace();
-        } catch (IOException e){
-            e.printStackTrace();
         } catch (Exception e){
+            Toast.makeText(Send.this, "Exceptional Error!", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
     }
 
-    class ClientThread implements Runnable{
+    /*class ClientThread implements Runnable{
         @Override
         public void run(){
-            try{
-                //InetAddress servAddr = InetAddress.getByName(SERVERIP);
-                sock = new Socket(SERVERIP, SERVERPORT);
-                if(sock.isConnected()){
-                    Toast.makeText(Send.this, "Socket Created!", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(Send.this, "Socket Creation FAILED!", Toast.LENGTH_LONG).show();
-                }
-            } catch (UnknownHostException e1){
-                e1.printStackTrace();
-            } catch (IOException e1){
-                e1.printStackTrace();
-            }
+
         }
-    }
+    }*/
 }
