@@ -25,13 +25,11 @@ public class Send extends Activity {
     DatabaseHelper helper = new DatabaseHelper(this);
 
     private Socket sock;
-    //private EditText edt;
-    //private String str;
-    //Button bSend;
 
     //KM: these will change to the address of of the selected recipient
     private static final int SERVERPORT = 5000;
-    private static final String SERVERIP = "172.21.1.169";
+    //private static final String SERVERIP = "172.24.2.42";
+    private static final String SERVERIP = "10.0.2.2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,9 +37,6 @@ public class Send extends Activity {
         setContentView(R.layout.send);
 
         new Thread(new ClientThread()).start();
-        //bSend = (Button) findViewById(R.id.sendButton);
-        //EditText edt = (EditText) findViewById(R.id.clientText);
-        //String str = edt.getText().toString();
     }
 
     public void onButtonClick(View view){
@@ -62,6 +57,15 @@ public class Send extends Activity {
         }
     }
 
+    /*protected void onStop() {
+        super.onStop();
+        try{
+            sock.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }*/
+
     class ClientThread implements Runnable{
         @Override
         public void run(){
@@ -69,10 +73,10 @@ public class Send extends Activity {
                 //InetAddress servAddr = InetAddress.getByName(SERVERIP);
                 sock = new Socket(SERVERIP, SERVERPORT);
                 if(sock.isConnected()){
-                    Toast.makeText(Send.this, "Socket Created!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Send.this, "Socket Created!", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    Toast.makeText(Send.this, "Socket Creation FAILED!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(Send.this, "Socket Creation FAILED!", Toast.LENGTH_LONG).show();
                 }
             } catch (UnknownHostException e1){
                 e1.printStackTrace();

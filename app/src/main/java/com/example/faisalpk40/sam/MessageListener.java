@@ -22,7 +22,7 @@ public class MessageListener extends AppCompatActivity {
     Handler updateLogHandler;
     Thread serverThread = null;
     private TextView text;
-    public static final int SERVERPORT = 6000;
+    public static final int SERVERPORT = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
